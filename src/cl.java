@@ -10,7 +10,7 @@ public class cl{
 
     public static void main(String args[]){
         Scanner ino = new Scanner(System.in);
-        System.out.println("enter name");
+        System.out.print("enter name:");
         String name = ino.nextLine();
         try{
 
@@ -24,7 +24,7 @@ public class cl{
 
             while(true){
 
-                clearBytes(arr);            // to remove data from previous operation from 
+                clearBytes(arr);            // to remove data from previous operation from
                 System.out.print(name + " : ");
                 arr = (inp.nextLine()).getBytes();
                 dpack_send =  new DatagramPacket( arr , arr.length ,  InetAddress.getByName("127.0.0.1") , 8080 );
@@ -32,11 +32,20 @@ public class cl{
                 DatagramPacket    namme =  new DatagramPacket( ogg , ogg.length ,  InetAddress.getByName("127.0.0.1") , 8090 );
                 dsock.send(dpack_send);
                 dsock2.send(namme);
-                clearBytes(arr);            // to remove data from previous operation from 
+
+
+
+                clearBytes(arr);            // to remove data from previous operation from
                 dpack_recv = new DatagramPacket( arr , arr.length );
                 dsock.receive(dpack_recv);
                 System.out.println("Server : " + new String(arr) );
+                if (new String(arr).equals("bye") ){
+                    dsock.close();
+                    dsock2.close();
 
+                    break;
+
+                }
             }
 
         }catch(IOException e){

@@ -10,7 +10,8 @@ public class server {
 
     {
         DatagramSocket sevesoke = new DatagramSocket(9876)
-;byte[] recivedt = new byte[1024];
+;
+        byte[] recivedt = new byte[1024];
        byte[] senddt =new byte[1024];
 while (true) {
 

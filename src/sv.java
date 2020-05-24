@@ -9,6 +9,7 @@ public class sv {
     try{DatagramSocket dsock = new DatagramSocket( 8080 , InetAddress.getByName("127.0.0.1") );
         DatagramSocket dsock2 = new DatagramSocket( 8090 , InetAddress.getByName("127.0.0.1") );
         byte[] arr = new byte[1024];
+
         byte[] agg = new byte[1024];
         DatagramPacket dpack_send , dpack_recv ;
 
@@ -21,13 +22,22 @@ public class sv {
             DatagramPacket  name = new DatagramPacket( agg , agg.length , InetAddress.getByName("127.0.0.1"), 8090);
             dsock.receive(dpack_recv);
             dsock2.receive(name);
-            System.out.println(new String(agg) + "   "+new String(arr) );
+            System.out.println(new String(agg) + "  : "+new String(arr) );
 
             clearBytes(arr);            // to remove data from previous operation from
             System.out.print("Enter Message : ");
             arr = (inp.nextLine()).getBytes();
             dpack_send =  new DatagramPacket( arr , arr.length , dpack_recv.getAddress() , dpack_recv.getPort() );
-            dsock.send(dpack_send);}
+            dsock.send(dpack_send);
+            if (new String(arr).equals("bye")   ){
+                dsock.close();
+                dsock2.close();
+
+                break;
+
+            }
+
+        }
     }
     catch(IOException e){
         System.out.println("Error : " + e );
